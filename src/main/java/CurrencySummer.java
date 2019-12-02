@@ -18,6 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class CurrencySummer {
 
@@ -25,8 +28,19 @@ public class CurrencySummer {
     private ArrayList<String> dataArray;
     private HashSet<String> dataSet;
     private Double sum;
+    private Logger logger;
 
     public CurrencySummer(String[] args) throws IndexOutOfBoundsException{
+        logger = Logger.getLogger("TaskLog");
+        FileHandler fh;
+        try {
+            fh = new FileHandler("logs.log");
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         xmlFile = args[0];
         dataSet = new HashSet<String>();
         dataArray = new ArrayList<String>();
@@ -41,34 +55,34 @@ public class CurrencySummer {
         try {
             processXml();
         } catch (SAXException e) {
-            System.err.println("Ошибка при чтении XML-файла");
+            logger.warning("Error occurred while reading xml");
             e.printStackTrace();
             System.exit(1);
         } catch (XPathExpressionException e) {
-            System.err.println("Ошибка при чтении XML-файла");
+            logger.warning("Error occurred while reading xml");
             e.printStackTrace();
             System.exit(1);
         } catch (ParserConfigurationException e) {
-            System.err.println("Ошибка при чтении XML-файла");
+            logger.warning("Error occurred while reading xml");
             e.printStackTrace();
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Ошибка при чтении XML-файла");
+            logger.warning("Error occurred while reading xml");
             e.printStackTrace();
             System.exit(1);
         }
 
         try {
             Double value = processJson();
-            System.out.println("Сумма подходящих элементов в Евро равна " + sum/value);
+            logger.info("Total sum of all acceptable items after transferring to euro " + sum/value);
         }catch (ArithmeticException e){
-            System.err.println("При пересчёте курса произошло деление на ноль. Проверьте наличие " +
+            logger.warning("При пересчёте курса произошло деление на ноль. Проверьте наличие " +
                     "ядерного гриба за окном и запаситесь крышками, они вам пригодятся");
             e.printStackTrace();
             System.exit(1);
         }
         catch (IOException e) {
-            System.err.println("Ошибка при обработке курса валют");
+            logger.warning("Error occurred while processing currency exchange rate");
             e.printStackTrace();
             System.exit(1);
         }
@@ -92,7 +106,7 @@ public class CurrencySummer {
         try{
            response = sendGetCurrencyRate();
         } catch (IOException e) {
-            System.err.println("Ошибка при попытке получения текущего курса валют");
+            logger.warning("Error occurred while processing currency exchange rate");
             e.printStackTrace();
             throw e;
         }
