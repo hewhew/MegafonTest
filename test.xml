@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<values>
+<main>
+	<items>
+		<item num='1'>5</item>
+		<item num='2' exclude='true'>6</item>
+		<item num='3'>44</item>
+		<item num='16' exclude='true'>99</item>
+		<item num='9'>5,5</item>
+		<item num='7'>5,32</item>
+		<item num='14'>999</item>
+		<item num='44' exclude='true'>100</item>
+		<item num='32'>65</item>
+		<item num='22'>63</item>
+		<item num='24'>4</item>
+		<item num='25'>1</item>
+	</items>
+</main>
+<advanced>
+	<items>
+		<item num='3'>5</item>
+		<item num='4' exclude='true'>6</item>
+		<item num='7'>44</item>
+		<item num='11'>99</item>
+		<item num='18'>5,5</item>
+		<item num='18'>5.32</item>
+		<item num='13'>99.90</item>
+		<item num='8'>100</item>
+		<item num='5' exclude='true'>65</item>
+		<item num='3'>63</item>
+		<item num='2' exclude='true'>4</item>
+		<item num='1'>1</item>
+	</items>
+</advanced>
+</values>
